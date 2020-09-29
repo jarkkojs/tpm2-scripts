@@ -13,8 +13,8 @@ die()
 }
 
 KEYHANDLE=$(./tpm2-root-key || die 1)
-POLICYDIGEST=$(./tpm2-pcr-policy --pcr 16 --name-alg=sha256 --bank=sha1 --trial || die 1)
-POLICYHANDLE=$(./tpm2-pcr-policy --pcr 16 --name-alg=sha256 --bank=sha1 || die 1)
+POLICYDIGEST=$(./tpm2-pcr-policy --pcr 16 --name-alg=sha256 --bank=sha256 --trial || die 1)
+POLICYHANDLE=$(./tpm2-pcr-policy --pcr 16 --name-alg=sha256 --bank=sha256 || die 1)
 KEYID=$(keyctl add trusted kmk "new 32 keyhandle=$KEYHANDLE hash=sha256 policydigest=$POLICYDIGEST" @u || die 1)
 
 keyctl pipe $KEYID > blob.hex || die 1
